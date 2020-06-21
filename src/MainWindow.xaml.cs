@@ -1,18 +1,9 @@
 ﻿using csmic;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdvancedCalculator
 {
@@ -42,11 +33,12 @@ namespace AdvancedCalculator
                 {
                     this.interpreter.Interpret(input);
                     this.historyItems.Add(new HistoryItem() { Input = input, Output = this.interpreter.Output });
-                    this.variableItems = this.interpreter.Variables.Select(kp => new VariableItem() { VariableName = kp.Key, Value = kp.Value.Value.ToString(), ExpressionVisibility = kp.Value.Type == VariableType.Equation ? Visibility.Visible : Visibility.Hidden, ExpressionComputation = "" }).ToList();
+                    this.variableItems = this.interpreter.Variables.Select(kp => new VariableItem() { VariableName = kp.Key, Value = kp.Value.Value.ToString(), ExpressionVisibility = kp.Value.Type == VariableType.Equation ? Visibility.Visible : Visibility.Hidden, ExpressionComputation = "", Icon = IconFont.Variable }).ToList();
                     foreach(var expressionVariable in this.variableItems.Where(v => v.ExpressionVisibility == Visibility.Visible))
                     {
                         this.interpreter.Interpret(expressionVariable.Value);
                         expressionVariable.ExpressionComputation = this.interpreter.Output;
+                        expressionVariable.Icon = IconFont.Function;
                     }
                 });
 

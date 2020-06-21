@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdvancedCalculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Advanced Calculator" Height="450" Width="800" Icon="calculator-variant-black.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -19,19 +19,19 @@
             <ListView Grid.Row="0" x:Name="lvVariableList" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding VariableName}" FontWeight="Bold" />
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding Value}" />
-                                    <TextBlock Visibility="{Binding ExpressionVisibility}" Text="{Binding ExpressionComputation}" FontStyle="Italic" />
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontFamily="{StaticResource MDI}" FontSize="24" Text="{Binding Icon}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="{Binding VariableName}" FontWeight="Bold" />
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="{Binding Value}" />
+                                <TextBlock Visibility="{Binding ExpressionVisibility}" Text="{Binding ExpressionComputation}" FontStyle="Italic" />
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -51,7 +51,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding FunctionName}" FontWeight="Bold" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="{StaticResource MDI}" Text="{Binding Icon}" Margin="5,0" />
+                                <TextBlock Text="{Binding FunctionName}" FontWeight="Bold" />
+                            </StackPanel>
                             <TextBlock Text="{Binding FunctionDescription}" FontStyle="Italic" />
                             <ListView Margin="5,0" ItemsSource="{Binding FunctionArguments}" BorderThickness="0">
                                 <ListView.ItemContainerStyle>
@@ -80,7 +83,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Height="100" VerticalAlignment="Center" Width="5"/>
+        <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Height="100" VerticalAlignment="Center" Width="5" />
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -89,15 +92,22 @@
             <ListView Grid.Row="0" x:Name="lvHistory">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VerticalAlignment="Bottom"/>
+                        <VirtualizingStackPanel VerticalAlignment="Bottom" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Input}" />
-                            <TextBlock Text="{Binding Output}" FontWeight="Bold" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontFamily="{StaticResource MDI}" Text="{x:Static local:IconFont.ArrowRightDropCircle}" FontSize="24" VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Input}" />
+                                <TextBlock Text="{Binding Output}" FontWeight="Bold" />
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
